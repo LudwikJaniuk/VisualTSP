@@ -22,4 +22,8 @@ The renderer has a general interface that the client uses. We'll start this by i
 
 ### Optional: Interactivity
 
-Lets the user drag dots around and (live updates|waits for button press). 
+Lets the user drag dots around and (live updates|waits for button press).
+
+# useful links
+
+https://github.com/dhbaird/easywsclient
