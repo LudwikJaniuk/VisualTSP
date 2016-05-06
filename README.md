@@ -28,4 +28,6 @@ Lets the user drag dots around and (live updates|waits for button press).
 
 https://github.com/dhbaird/eeasywsclient
 
-http://www.taywils.me/2014/11/15/boostchatclient.html
+Chat client: http://www.taywils.me/2014/11/15/boostchatclient.html
+
+Boost tcp tutorials: http://www.boost.org/doc/libs/1_60_0/doc/html/boost_asio/tutorial.html
