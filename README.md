@@ -6,7 +6,7 @@ Solving and visualizing the [Travelling Salesman Problem](https://en.wikipedia.o
 
 ![project plan](http://i.imgur.com/bu50eBY.png)
 
-The project consists of several parts: A server that solves the TSP problem and broadcasts solutions, a client that visualizes the solutions, and a homemade 3d-renderer that uses only the cpu. 
+The project consists of several parts: A server that solves the TSP problem and broadcasts solutions, a client that visualizes the solutions, and a homemade 3D-renderer that uses only the CPU. 
 
 ## Server
 
@@ -16,10 +16,16 @@ The problem is broadcast with a request to the server, specifying several option
 
 Has a GUI where the user first selects the problem size and maybe other options. Then sends the problem request to the server. Then receives the solution and visualizes it.
 
+### 3D-renderer
+
+The renderer has a general interface that the client uses. We'll start this by implementing a simple renderer that uses existing libraries, and if we have the time, we will write our own cpy 3d-renderer. We will structure the program so that interchanging these works without much effort.
+
 ### Optional: Interactivity
 
-Lets the user drag dots around and (live updates|waits for button press). 
+Lets the user drag dots around and (live updates|waits for button press).
 
-## 3D-renderer
+# useful links
 
-The renderer has a general interface that the client uses. I think we'll start by implementing a simple renderer that uses existing libraries, and if we have the time, we write our own cpy 3d-renderer. We structure the program so that interchanging these works without effort.
+https://github.com/dhbaird/eeasywsclient
+
+http://www.taywils.me/2014/11/15/boostchatclient.html
