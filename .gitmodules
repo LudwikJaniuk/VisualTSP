@@ -1,0 +1,3 @@
+[submodule "chat_reference"]
+	path = chat_reference
+	url = git@github.com:LudwikJaniuk/chat_test.git
