@@ -26,4 +26,6 @@ Lets the user drag dots around and (live updates|waits for button press).
 
 # useful links
 
-https://github.com/dhbaird/easywsclient
+https://github.com/dhbaird/eeasywsclient
+
+http://www.taywils.me/2014/11/15/boostchatclient.html
