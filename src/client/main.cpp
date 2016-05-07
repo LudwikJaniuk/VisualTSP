@@ -1,18 +1,28 @@
 #include <iostream>
+#include <sstream>
 
 #include <boost/array.hpp>
 #include <boost/asio.hpp>
 #include <boost/asio/ip/tcp.hpp>
+#include <boost/property_tree/ptree.hpp>
+#include <boost/property_tree/json_parser.hpp>
 
 using namespace std;
 using boost::asio::ip::tcp;
+using boost::property_tree::ptree;
+using boost::property_tree::read_json;
+using boost::property_tree::write_json;
 
 string port = "3000";
+bool pretty_json = false;
+
+string make_json();
 
 int main(int argc, char** argv)
 {
 	try
 	{
+		cout << make_json() << endl;
 		if (argc != 2) {
 			cout << "Usage: client <host>" << endl;
 			return 1;
@@ -31,6 +41,9 @@ int main(int argc, char** argv)
 		{
 			boost::array<char, 128> buf;
 			boost::system::error_code err;
+
+			string msg = make_json();
+			socket.write_some(boost::asio::buffer(msg, msg.length()));
 			size_t len = socket.read_some(boost::asio::buffer(buf), err);
 
 			if (err == boost::asio::error::eof) // Clean close
@@ -50,4 +63,16 @@ int main(int argc, char** argv)
 		cerr << e.what() << endl;
 	}
 	return 0;
+}
+
+string make_json() 
+{
+	ptree pt;
+	pt.put("message", "Hello World!");
+	pt.put("repeat_times", 4);
+
+	ostringstream buf;
+	write_json(buf, pt, pretty_json); 
+
+	return buf.str();
 }
