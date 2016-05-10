@@ -1,0 +1,20 @@
+{
+  "nodes": [
+    {
+      "x": 0,
+      "y": 0,
+      "z": 0
+    },
+    {
+      "x": 1,
+      "y": 2,
+      "z": 3
+    },
+    {
+      "x": -1,
+      "y": 0.43,
+      "z": -100.01
+    }
+  ],
+  "comment": "The position of the nodes in the list will be used by server as a node id in the response. It starts at 0."
+}

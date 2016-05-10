@@ -1,0 +1,5 @@
+{
+  "nodes": [0, 2, 1],
+  "comment": "nodes is an ordered list of the path. The ids refer to the nodes sent earlier.",
+  "comment": "The last step is implied to be from the last node in the list to the first."
+}
