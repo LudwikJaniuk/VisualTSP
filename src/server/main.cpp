@@ -6,13 +6,23 @@
 #include <boost/asio.hpp>
 #include <boost/property_tree/ptree.hpp>
 #include <boost/property_tree/json_parser.hpp>
+#include <boost/geometry.hpp>
 
 using namespace std;
 using boost::asio::ip::tcp;
 using boost::property_tree::ptree;
 using boost::property_tree::read_json;
+namespace bg = boost::geometry;
 
-typedef vector<int> path_t;
+typedef float coord_t;
+typedef bg::model::point<coord_t, 3, bg::cs::cartesian> point_t;
+
+struct Node {
+	point_t pos;
+	int id;
+};
+
+typedef vector<Node> path_t;
 
 int port = 3000;
 
@@ -63,7 +73,8 @@ string make_daytime_string()
 path_t nodes_from_tree(ptree tree) {
 	path_t nodes;
 	for (auto child: tree) {
-		nodes.push_back(child.second.get<int>("x"));
+		coord_t x = child.second.get<coord_t>("x");
+		nodes.push_back(Node{point_t(x, x, x), 0});
 	}
 	return nodes;
 }
@@ -74,12 +85,15 @@ void tsp_solve(path_t& nodes) {
 
 ptree tree_from_nodes(const path_t& nodes) {
 	ptree nodes_tree;
-	for (auto x: nodes) {
-		ptree node;
-		node.put("x", x);
-		node.put("y", 2);
-		node.put("z", 3);
-		nodes_tree.push_back(make_pair("", node)); 
+	for (auto node: nodes) {
+		point_t pos = node.pos;
+
+		ptree node_tree;
+		node_tree.put("x", pos.get<0>());
+		node_tree.put("y", pos.get<1>());
+		node_tree.put("z", pos.get<2>());
+		node_tree.put("id", node.id);
+		nodes_tree.push_back(make_pair("", node_tree)); 
 	}
 	return nodes_tree;
 }
