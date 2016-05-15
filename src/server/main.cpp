@@ -36,7 +36,7 @@ int main()
 		boost::asio::io_service io_service;
 		tcp::acceptor acceptor(io_service, tcp::endpoint(tcp::v4(), port));
 
-		cout << "Wating for connections." << endl;
+		cout << "Waiting for connections." << endl;
 
 		while (true)
 		{
@@ -45,7 +45,7 @@ int main()
 			cout << "Got a connection" << endl;
 
 			int bytesRead = 0;
-			int inputSize = 1024;
+			const int inputSize = 1024;
 			char readBuf[inputSize] = {0};
 			bytesRead = socket.read_some(boost::asio::buffer(readBuf, inputSize));
 			string msg(readBuf, bytesRead);
@@ -81,6 +81,20 @@ path_t nodes_from_tree(ptree tree) {
 
 void tsp_solve(path_t& nodes) {
 	reverse(nodes.begin(), nodes.end());
+}
+
+void tsp_nearest_neighbor(path_t& nodes) {
+	if (nodes.empty()) {
+		return;
+	}
+	
+	for (int i = 1; i < nodes.size(); i++) {
+		for (int j = 0; j < nodes.size() - i; j++) {
+			if (bg::distance(nodes[i-1].pos, nodes[j].pos) < bg::distance(nodes[i-1].pos, nodes[i].pos)) {
+				swap(i, j);
+			}
+		}
+	}
 }
 
 ptree tree_from_nodes(const path_t& nodes) {
