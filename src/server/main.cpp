@@ -84,14 +84,10 @@ void tsp_solve(path_t& nodes) {
 }
 
 void tsp_nearest_neighbor(path_t& nodes) {
-	if (nodes.empty()) {
-		return;
-	}
-	
-	for (int i = 1; i < nodes.size(); i++) {
-		for (int j = 0; j < nodes.size() - i; j++) {
-			if (bg::distance(nodes[i-1].pos, nodes[j].pos) < bg::distance(nodes[i-1].pos, nodes[i].pos)) {
-				swap(i, j);
+	for (int i = 0; i < nodes.size(); i++) {
+		for (int j = i+1; j < nodes.size() ; j++) {
+			if (bg::distance(nodes[i].pos, nodes[j].pos) < bg::distance(nodes[i].pos, nodes[i+1].pos)) {
+				swap(nodes[i+1], nodes[j]);
 			}
 		}
 	}
