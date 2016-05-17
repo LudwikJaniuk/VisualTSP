@@ -7,7 +7,7 @@
 #include <boost/property_tree/ptree.hpp>
 #include <boost/property_tree/json_parser.hpp>
 #include <boost/geometry.hpp>
-#include "../common/common.h"
+#include "common.h"
 
 using namespace std;
 using boost::asio::ip::tcp;
