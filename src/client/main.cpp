@@ -42,7 +42,9 @@ int main(int argc, char** argv)
 		string msg = make_json();
 		cout << "Sending: " << msg << endl;
 		socket.write_some(boost::asio::buffer(msg, msg.length()), err);
-		cout << "ERoor: " <<  err << endl;
+		if (err) {
+			cout << "Error sending data: " <<  err << endl;
+		}
 		cout << "Received: ";
 		while (true)
 		{
