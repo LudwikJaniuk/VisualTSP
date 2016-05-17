@@ -34,7 +34,7 @@ int main()
 			char readBuf[inputSize] = {0};
 			bytesRead = socket.read_some(boost::asio::buffer(readBuf, inputSize));
 			string msg(readBuf, bytesRead);
-			cout << "Received json:\n===========\n" << msg << "\n==========" << endl;
+			cout << "Server received json:\n===========\n" << msg << "\n==========" << endl;
 
 			msg = msg_from_json(msg);
 
