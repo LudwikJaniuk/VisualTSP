@@ -13,5 +13,7 @@ struct Node {
 };
 typedef vector<Node> path_t;
 
-path_t nodes_from_tree(ptree tree);
-ptree tree_from_nodes(const path_t& nodes);
+string path_to_json(path_t&);
+path_t json_to_path(string&);
+
+

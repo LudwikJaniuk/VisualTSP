@@ -4,16 +4,11 @@
 #include <boost/array.hpp>
 #include <boost/asio.hpp>
 #include <boost/asio/ip/tcp.hpp>
-#include <boost/property_tree/ptree.hpp>
-#include <boost/property_tree/json_parser.hpp>
 
 #include "common.h"
 
 using namespace std;
 using boost::asio::ip::tcp;
-using boost::property_tree::ptree;
-using boost::property_tree::read_json;
-using boost::property_tree::write_json;
 
 string port = "3000";
 bool pretty_json = false;
@@ -22,10 +17,6 @@ string make_json();
 
 int main(int argc, char** argv)
 {
-	path_t p{Node{point_t(44,33,22), 17}};
-	p = nodes_from_tree(tree_from_nodes(p));
-	point_t pos = p[0].pos;
-	cout << p[0].id << endl;
 	try
 	{
 		if (argc != 2) {
@@ -85,9 +76,5 @@ string make_json()
 		Node node{point_t(i, 2, 3), i};
 		nodes.push_back(node); 
 	}
-	ptree pt = tree_from_nodes(nodes);
-	ostringstream buf;
-	write_json(buf, pt, pretty_json); 
-
-	return buf.str();
+	return path_to_json(nodes);
 }

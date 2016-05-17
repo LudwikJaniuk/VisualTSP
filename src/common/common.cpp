@@ -1,7 +1,9 @@
+#include <boost/property_tree/json_parser.hpp>
 #include "common.h"
 
 using namespace std;
 using boost::property_tree::ptree;
+using boost::property_tree::read_json;
 
 path_t nodes_from_tree(ptree tree) {
 	ptree nodes_tree = tree.get_child("nodes");
@@ -31,5 +33,19 @@ ptree tree_from_nodes(const path_t& nodes) {
 	ptree pt;
 	pt.put_child("nodes", nodes_tree);
 	return pt;
+}
+
+string path_to_json(path_t& path) {
+	ptree pt = tree_from_nodes(path);
+	ostringstream buf;
+	write_json(buf, pt, false); 
+	return buf.str();
+}
+
+path_t json_to_path(string& json) {
+	istringstream is(json);
+	ptree pt;
+	read_json(is, pt);
+	return nodes_from_tree(pt);
 }
 

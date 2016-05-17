@@ -4,15 +4,11 @@
 #include <sstream>
 #include <algorithm>
 #include <boost/asio.hpp>
-#include <boost/property_tree/ptree.hpp>
-#include <boost/property_tree/json_parser.hpp>
 #include <boost/geometry.hpp>
 #include "common.h"
 
 using namespace std;
 using boost::asio::ip::tcp;
-using boost::property_tree::ptree;
-using boost::property_tree::read_json;
 namespace bg = boost::geometry;
 int port = 3000;
 
@@ -71,18 +67,8 @@ void tsp_nearest_neighbor(path_t& nodes) {
 
 string msg_from_json(string json) 
 {
-	ptree pt;
-	istringstream is(json);
-	read_json(is, pt);
-	path_t nodes = nodes_from_tree(pt);
-
-	tsp_solve(nodes);
-
-	ptree sol_pt = tree_from_nodes(nodes);
-	ostringstream buf;
-	write_json(buf, sol_pt, false); 
-
-	return buf.str();
+	path_t path = json_to_path(json);
+	tsp_solve(path);
+	return path_to_json(path);
 }
-
 
