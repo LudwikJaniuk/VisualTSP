@@ -1,9 +1,11 @@
 #include <boost/property_tree/json_parser.hpp>
+#include <boost/property_tree/detail/file_parser_error.hpp>
 #include "common.h"
 
 using namespace std;
 using boost::property_tree::ptree;
 using boost::property_tree::read_json;
+using boost::property_tree::json_parser::json_parser_error;
 
 path_t nodes_from_tree(ptree tree) {
 	ptree nodes_tree = tree.get_child("nodes");
@@ -38,14 +40,24 @@ ptree tree_from_nodes(const path_t& nodes) {
 string path_to_json(path_t& path) {
 	ptree pt = tree_from_nodes(path);
 	ostringstream buf;
-	write_json(buf, pt, false); 
+	try {
+		write_json(buf, pt, false); 
+	} catch (json_parser_error& e) {
+		cout << "Could not write this path_t to json!" << endl;
+		throw e;
+	}
 	return buf.str();
 }
 
 path_t json_to_path(string& json) {
 	istringstream is(json);
 	ptree pt;
-	read_json(is, pt);
+	try {
+		read_json(is, pt);
+	} catch (json_parser_error& e) {
+		cout << "Could not parse this json as a path_t!" << endl;
+		throw e;
+	}
 	return nodes_from_tree(pt);
 }
 

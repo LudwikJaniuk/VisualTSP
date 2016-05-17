@@ -14,6 +14,7 @@ string port = "3000";
 bool pretty_json = false;
 
 string make_json();
+void console_render(string);
 
 int main(int argc, char** argv)
 {
@@ -45,6 +46,7 @@ int main(int argc, char** argv)
 		}
 		cout << "Received: ";
 
+		ostringstream buf_stream;
 		while (true)
 		{
 			size_t len = socket.read_some(boost::asio::buffer(buf), err);
@@ -57,14 +59,14 @@ int main(int argc, char** argv)
 			{
 				throw boost::system::system_error(err);
 			}
-
-			cout.write(buf.data(), len);
+			buf_stream.write(buf.data(), len);
 		}
-		cout << endl;
+		string solution = buf_stream.str();
+		console_render(solution);
 	}
 	catch (std::exception& e) 
 	{
-		cerr << e.what() << endl;
+		cerr << "Client error: " << e.what() << endl;
 	}
 	return 0;
 }
@@ -77,4 +79,20 @@ string make_json()
 		nodes.push_back(node); 
 	}
 	return path_to_json(nodes);
+}
+
+void console_render(string solution)
+{
+	path_t path = json_to_path(solution);
+	cout << "TSP Solution: " << endl;
+
+	if (0 == path.size()) {
+		cout << "NO DATA GIVEN" << endl;
+	} else if (1 == path.size()) {
+		cout << path[0].pos << endl;
+	} else {
+		for (int i = 0; i < path.size()-1; i++) {
+			cout << "Go from " << path[i].pos << " to " << path[i+1].pos << endl;
+		}
+	}
 }
