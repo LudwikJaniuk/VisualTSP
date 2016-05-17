@@ -4,14 +4,11 @@
 #include <boost/array.hpp>
 #include <boost/asio.hpp>
 #include <boost/asio/ip/tcp.hpp>
-#include <boost/property_tree/ptree.hpp>
-#include <boost/property_tree/json_parser.hpp>
+
+#include "common.h"
 
 using namespace std;
 using boost::asio::ip::tcp;
-using boost::property_tree::ptree;
-using boost::property_tree::read_json;
-using boost::property_tree::write_json;
 
 string port = "3000";
 bool pretty_json = false;
@@ -40,12 +37,14 @@ int main(int argc, char** argv)
 		boost::system::error_code err;
 
 		string msg = make_json();
-		cout << "Sending: " << msg << endl;
+		cout << "Client Sending: " << msg << endl;
 		socket.write_some(boost::asio::buffer(msg, msg.length()), err);
+
 		if (err) {
 			cout << "Error sending data: " <<  err << endl;
 		}
 		cout << "Received: ";
+
 		while (true)
 		{
 			size_t len = socket.read_some(boost::asio::buffer(buf), err);
@@ -72,21 +71,10 @@ int main(int argc, char** argv)
 
 string make_json() 
 {
-	ptree pt;
-	ptree nodes;
+	path_t nodes;
 	for (int i = 0; i < 10; i++) {
-		ptree node;
-		node.put("x", i);
-		node.put("y", 2);
-		node.put("z", 3);
-		nodes.push_back(make_pair("", node)); 
+		Node node{point_t(i, 2, 3), i};
+		nodes.push_back(node); 
 	}
-	pt.put_child("nodes", nodes);
-	pt.put("message", "Hello World!");
-	pt.put("repeat_times", 4);
-
-	ostringstream buf;
-	write_json(buf, pt, pretty_json); 
-
-	return buf.str();
+	return path_to_json(nodes);
 }
