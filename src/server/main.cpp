@@ -7,13 +7,14 @@
 #include <boost/property_tree/ptree.hpp>
 #include <boost/property_tree/json_parser.hpp>
 #include <boost/geometry.hpp>
+#include "../common/common.h"
 
 using namespace std;
 using boost::asio::ip::tcp;
 using boost::property_tree::ptree;
 using boost::property_tree::read_json;
 namespace bg = boost::geometry;
-
+/*
 typedef float coord_t;
 typedef bg::model::point<coord_t, 3, bg::cs::cartesian> point_t;
 
@@ -23,7 +24,7 @@ struct Node {
 };
 
 typedef vector<Node> path_t;
-
+*/
 int port = 3000;
 
 string make_daytime_string();
@@ -69,7 +70,7 @@ string make_daytime_string()
 	time_t now = time(0);
 	return ctime(&now);
 }
-
+/*
 path_t nodes_from_tree(ptree tree) {
 	path_t nodes;
 	for (auto child: tree) {
@@ -78,7 +79,7 @@ path_t nodes_from_tree(ptree tree) {
 	}
 	return nodes;
 }
-
+*/
 void tsp_solve(path_t& nodes) {
 	reverse(nodes.begin(), nodes.end());
 }
@@ -92,7 +93,7 @@ void tsp_nearest_neighbor(path_t& nodes) {
 		}
 	}
 }
-
+/*
 ptree tree_from_nodes(const path_t& nodes) {
 	ptree nodes_tree;
 	for (auto node: nodes) {
@@ -107,7 +108,7 @@ ptree tree_from_nodes(const path_t& nodes) {
 	}
 	return nodes_tree;
 }
-
+*/
 string msg_from_json(string json) 
 {
 	ptree pt;
