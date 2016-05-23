@@ -29,4 +29,8 @@
 
 # Extra
 *.swp
+*.pro
+*.pro.user
 
+/src/client/client
+/src/server/server

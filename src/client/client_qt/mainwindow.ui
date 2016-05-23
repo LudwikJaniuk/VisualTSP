@@ -60,6 +60,9 @@
       </widget>
      </item>
      <item>
+      <widget class="OGLWidget" name="openGLWidget"/>
+     </item>
+     <item>
       <widget class="QLabel" name="SendingLabel">
        <property name="text">
         <string>TextLabel</string>
@@ -113,6 +116,13 @@
   <widget class="QStatusBar" name="statusBar"/>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
+ <customwidgets>
+  <customwidget>
+   <class>OGLWidget</class>
+   <extends>QOpenGLWidget</extends>
+   <header location="global">oglwidget.h</header>
+  </customwidget>
+ </customwidgets>
  <resources/>
  <connections/>
 </ui>
