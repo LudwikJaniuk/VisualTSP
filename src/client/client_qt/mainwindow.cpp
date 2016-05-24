@@ -40,3 +40,18 @@ void MainWindow::on_SendButton_clicked()
     ui->SendingLabel->setText("SLAMANADER");
     conThread.sendProblem("127.0.0.1", "3000");
 }
+
+void MainWindow::on_xSlider_valueChanged(int value)
+{
+    ui->openGLWidget->setXRotation(value);
+}
+
+void MainWindow::on_ySlider_valueChanged(int value)
+{
+    ui->openGLWidget->setYRotation(value);
+}
+
+void MainWindow::on_zSlider_valueChanged(int value)
+{
+    ui->openGLWidget->setZRotation(value);
+}

@@ -2,6 +2,7 @@
 #define OGLWIDGET_H
 
 #include <QWidget>
+#include <QVector3D>
 #include <QOpenGLWidget>
 #include <QOpenGLFunctions>
 
@@ -17,6 +18,12 @@ public:
     OGLWidget(QWidget* parent = 0);
     ~OGLWidget();
 
+public slots:
+    void setXRotation(int angle);
+    void setYRotation(int angle);
+    void setZRotation(int angle);
+
+
 protected:
     // These three needed for it to work.
     void initializeGL();
@@ -28,6 +35,9 @@ protected:
 
     path_t path;
     vector<float> vertices;
+
+    QVector3D rot;
+    QPoint lastPos;
 };
 
 #endif // OGLWIDGET_H
