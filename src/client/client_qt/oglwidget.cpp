@@ -28,7 +28,7 @@ void OGLWidget::resizeGL(int width, int height)
     //m_projection.perspective(45.0f, w / float(h), 0.01f, 100.0f);
     //...
 
-    int side = qMin(width, height);
+    float side = qMin(width, height);
     //glViewport((width - side) / 2, (height - side) / 2, side, side);
     //glViewport(1000, 0, side, side);
 
