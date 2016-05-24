@@ -18,13 +18,15 @@ void ConnectionThread::sendProblem(string host, string port)
     cout << "Sendproblem slot with host " << host << endl;
     this->host = host;
     this->port = port;
-    // TODO: But what if it's already runnig?
-    // This should start the thread, make run() run in the separate thread;
+    // TONEVERDO: This should actually check if the thread is already running etc,
+    // but we dont have time for that.
+    // This starts the thread, make run() run in the separate thread;
     start();
 }
 
 string make_json();
 
+// Handles the whole sending-receiving job.
 void ConnectionThread::run()
 {
     cout << "Run started." << endl;
@@ -54,6 +56,7 @@ void ConnectionThread::run()
         }
         cout << "Received: ";
 
+	// We'll keep writing to this buffer as long as we're getting new data.
         ostringstream buf_stream;
         while (true)
         {
@@ -80,6 +83,8 @@ void ConnectionThread::run()
     cout << "Now we will exit." << endl;
 }
 
+// Generated random json problem.
+// TODO: Maybe add parameters, eg. problem size?
 string make_json()
 {
     path_t nodes;

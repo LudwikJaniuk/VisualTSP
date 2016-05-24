@@ -19,6 +19,7 @@ public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
 
+// These receive data to show in the gui.
 public slots:
     void displaySending(QString result);
     void displaySolution(QString result);
@@ -30,6 +31,7 @@ private slots:
 
 private:
     Ui::MainWindow *ui;
+    // We'll use this to send the problem and wait for an answer without blocking the GUI.
     ConnectionThread conThread;
 };
 
