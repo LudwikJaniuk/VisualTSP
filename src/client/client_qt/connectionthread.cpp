@@ -92,6 +92,7 @@ string make_json()
         Node node{point_t(i, 2, 3), i};
         nodes.push_back(node);
     }
+	shuffle(nodes);
     return path_to_json(nodes);
 }
 
