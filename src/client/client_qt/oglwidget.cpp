@@ -1,5 +1,6 @@
 #include "oglwidget.h"
 
+#include <boost/geometry.hpp>
 #include <QOpenGLContext>
 #include <QOpenGLFunctions>
 
@@ -17,13 +18,24 @@ OGLWidget::~OGLWidget()
 
 void OGLWidget::updateVertices()
 {
+    using boost::geometry::distance;
+    // We save the vertices of the path to an vector in a format that opengl accepts, and also
+    // setup the fitRadius so that all our points will fit in the view
+
+    coord_t largestLength = 0.1;
     vertices.clear();
     vertices.reserve(path.size()*3);
     for (auto& n : path) {
         vertices.push_back(n.pos.get<0>());
         vertices.push_back(n.pos.get<1>());
         vertices.push_back(n.pos.get<2>());
+
+        coord_t l = distance(point_t{0, 0, 0}, n.pos);
+        if (l > largestLength) {
+            largestLength = l;
+        }
     }
+    fitRadius = largestLength*1.1;
 }
 
 void OGLWidget::initializeGL()
@@ -73,6 +85,8 @@ void OGLWidget::paintGL()
     glRotatef(rot.x() * 3.6f, 0.0, 1.0, 0.0);
     glRotatef(rot.y() * 3.6f, 1.0, 0.0, 0.0);
     glRotatef(rot.z() * 3.6f, 0.0, 0.0, 1.0);
+    float scale = 1/fitRadius;
+    glScalef(scale, scale, scale);
     cout << "REdrew" << endl;
 
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, vertices.data());

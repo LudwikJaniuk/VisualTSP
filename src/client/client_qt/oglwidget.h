@@ -38,6 +38,8 @@ protected:
 
     QVector3D rot;
     QPoint lastPos;
+    // Radius of a sphere that shall be visible inside the view.
+    coord_t fitRadius = 1;
 };
 
 #endif // OGLWIDGET_H
