@@ -11,8 +11,6 @@ using namespace std;
 using boost::asio::ip::tcp;
 namespace bg = boost::geometry;
 
-typedef boost::permutation_iterator< path_t::iterator, list<int>::iterator > permutation_type;
-
 struct Path
 {
 	path_t path;
@@ -97,7 +95,7 @@ void permutate(path_t& nodes, int offset, Path& shortestPath) {
         path_t permutation = nodes;
         permutation[offset] = nodes[i];
         permutation[i] = nodes[offset];
-		checkShorter(permutation, shortestPath);
+		update_shortestPath(permutation, shortestPath);
         permutate(permutation, offset + 1, shortestPath);
     }
 }
