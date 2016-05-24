@@ -29,6 +29,9 @@ void MainWindow::displaySending(QString json) {
 
 void MainWindow::displaySolution(QString json) {
     ui->ResponseLabel->setText(json);
+    string s = json.toStdString();
+    path_t p = json_to_path(s);
+    ui->openGLWidget->setData(p);
 }
 
 void MainWindow::displayError(QString err) {

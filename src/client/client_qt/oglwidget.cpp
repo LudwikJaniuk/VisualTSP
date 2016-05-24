@@ -96,6 +96,12 @@ void OGLWidget::paintGL()
     glDrawArrays(GL_LINE_LOOP, 0, vertices.size()/3);
 }
 
+void OGLWidget::setData(path_t path)
+{
+    this->path = path;
+    updateVertices();
+}
+
 void OGLWidget::setXRotation(int angle)
 {
     if (angle != rot.x()) {

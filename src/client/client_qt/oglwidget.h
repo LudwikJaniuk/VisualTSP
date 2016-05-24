@@ -22,7 +22,7 @@ public slots:
     void setXRotation(int angle);
     void setYRotation(int angle);
     void setZRotation(int angle);
-
+    void setData(path_t path);
 
 protected:
     // These three needed for it to work.
