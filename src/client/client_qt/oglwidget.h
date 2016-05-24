@@ -5,6 +5,8 @@
 #include <QOpenGLWidget>
 #include <QOpenGLFunctions>
 
+#include "common.h"
+
 class OGLWidget : public QOpenGLWidget,
                   protected QOpenGLFunctions
 {
@@ -16,6 +18,8 @@ protected:
     void initializeGL();
     void resizeGL(int w, int h);
     void paintGL();
+
+    path_t path;
 };
 
 #endif // OGLWIDGET_H
