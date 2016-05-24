@@ -3,10 +3,8 @@
 #include <string>
 #include <sstream>
 #include <algorithm>
-#include <iterator>
 #include <boost/asio.hpp>
 #include <boost/geometry.hpp>
-#include <boost/iterator/permutation_iterator.hpp>
 #include "common.h"
 
 using namespace std;
