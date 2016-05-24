@@ -106,6 +106,18 @@ void tsp_total_search(path_t& nodes) {
 	
 	nodes = shortestPath.path;
 }
+void tsp_total_search_new(path_t& nodes) {
+	
+	path_t originalPath = nodes;
+	Path shortestPath = {nodes, calculate_path_distance(nodes)};
+	
+	do {
+		next_permutation(nodes.begin(), nodes.end());
+		update_shortestPath(nodes, shortestPath);
+	} while (nodes != originalPath);
+	
+	nodes = shortestPath.path;
+}
 
 void tsp_solve(path_t& nodes, string algo) {
 	if (algo == "christo") {
