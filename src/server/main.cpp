@@ -3,17 +3,27 @@
 #include <string>
 #include <sstream>
 #include <algorithm>
+#include <iterator>
 #include <boost/asio.hpp>
 #include <boost/geometry.hpp>
+#include <boost/iterator/permutation_iterator.hpp>
 #include "common.h"
 
 using namespace std;
 using boost::asio::ip::tcp;
 namespace bg = boost::geometry;
+
+typedef boost::permutation_iterator< path_t::iterator, list<int>::iterator > permutation_type;
+
+struct Path
+{
+	path_t path;
+	coord_t length;
+};
+
 int port = 3000;
 
 string msg_from_json(string json);
-int calculate_path_distance(path_t& nodes);
 
 int main()
 {
@@ -52,17 +62,12 @@ int main()
 	return 0;
 }
 
-void tsp_solve(path_t& nodes, string algo) {
-	if (algo == "christo") {
-		tsp_christofides(nodes);
+coord_t calculate_path_distance(path_t& nodes) {
+	coord_t totalDist = 0;
+	for (int i = 1; i < nodes.size(); i++) {
+		totalDist += bg::distance(nodes[i].pos, nodes[i-1].pos);
 	}
-	else if (algo == "nn") {
-		tsp_nearest_neighbor(nodes);
-	}
-	else if (algo == "total") {
-		tsp_total_search(nodes);
-	}
-	else { throw "Invalid TSP algorithm"; }
+	return totalDist;
 }
 
 void tsp_christofides(path_t& nodes) {
@@ -79,26 +84,50 @@ void tsp_nearest_neighbor(path_t& nodes) {
 	}
 }
 
-void tsp_total_search(path_t& nodes) {
-	path_t shortestPath = nodes;
-	coord_t shortestPathDist = calculate_path_distance(shortestPath);
-	for {
-		if 
+void checkShorter(path_t& nodes, Path& shortestPath) {
+	coord_t currentPathDist = calculate_path_distance(nodes);
+	if (currentPathDist < shortestPath.length) {
+		shortestPath = {nodes, currentPathDist};
 	}
 }
 
-int calculate_path_distance(path_t& nodes) {
-	totalDist = 0;
-	for (int i = 1; i < nodes.size(); i++) {
-		totalDist += bg::distance(nodes[i].pos, nodes[i-1].pos)
+void permutate(path_t& nodes, int pointer, Path& shortestPath) {
+    if (pointer == nodes.size()) {
+        return;
+    }
+    for (int i = pointer; i < nodes.size(); i++) {
+        path_t permutation = nodes;
+        permutation[pointer] = nodes[i];
+        permutation[i] = nodes[pointer];
+		checkShorter(permutation, shortestPath);
+        permutate(permutation, pointer + 1, shortestPath);
+    }
+}
+
+void tsp_total_search(path_t& nodes) {
+	Path shortestPath = {nodes, calculate_path_distance(nodes)};
+	permutate(nodes, 0, shortestPath);
+	
+	nodes = shortestPath.path;
+}
+
+void tsp_solve(path_t& nodes, string algo) {
+	if (algo == "christo") {
+		tsp_christofides(nodes);
 	}
-	return totalDist;
+	else if (algo == "nn") {
+		tsp_nearest_neighbor(nodes);
+	}
+	else if (algo == "total") {
+		tsp_total_search(nodes);
+	}
+	else { throw "Invalid TSP algorithm"; }
 }
 
 string msg_from_json(string json) 
 {
 	path_t path = json_to_path(json);
-	tsp_solve(path);
+	tsp_solve(path, "nn");
 	return path_to_json(path);
 }
 
