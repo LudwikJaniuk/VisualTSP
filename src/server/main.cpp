@@ -84,7 +84,7 @@ void tsp_nearest_neighbor(path_t& nodes) {
 	}
 }
 
-void checkShorter(path_t& nodes, Path& shortestPath) {
+void update_shortestPath(path_t& nodes, Path& shortestPath) {
 	coord_t currentPathDist = calculate_path_distance(nodes);
 	if (currentPathDist < shortestPath.length) {
 		shortestPath = {nodes, currentPathDist};
