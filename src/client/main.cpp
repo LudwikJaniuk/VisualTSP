@@ -1,3 +1,8 @@
+/*
+ * This file is old and obsolete. The new client implementation can be found in client_qt and must be built with qt.
+ * This file kept around so that we have something to show if the qt build fucks up.
+ *
+ */
 #include <iostream>
 #include <sstream>
 
