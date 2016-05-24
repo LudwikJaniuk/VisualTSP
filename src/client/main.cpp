@@ -1,8 +1,12 @@
+<<<<<<< Updated upstream
 /*
  * This file is old and obsolete. The new client implementation can be found in client_qt and must be built with qt.
  * This file kept around so that we have something to show if the qt build fucks up.
  *
  */
+=======
+#include <algorithm>
+>>>>>>> Stashed changes
 #include <iostream>
 #include <sstream>
 
@@ -83,6 +87,7 @@ string make_json()
 		Node node{point_t(i, 2, 3), i};
 		nodes.push_back(node); 
 	}
+	random_shuffle(nodes.begin(), nodes.end());
 	return path_to_json(nodes);
 }
 
