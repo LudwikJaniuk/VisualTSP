@@ -125,7 +125,7 @@ void tsp_solve(path_t& nodes, string algo) {
 string msg_from_json(string json) 
 {
 	path_t path = json_to_path(json);
-	tsp_solve(path, "nn");
+	tsp_solve(path, "total");
 	return path_to_json(path);
 }
 
