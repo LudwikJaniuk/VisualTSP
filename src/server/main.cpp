@@ -13,6 +13,7 @@ namespace bg = boost::geometry;
 int port = 3000;
 
 string msg_from_json(string json);
+int calculate_path_distance(path_t& nodes);
 
 int main()
 {
@@ -51,7 +52,20 @@ int main()
 	return 0;
 }
 
-void tsp_solve(path_t& nodes) {
+void tsp_solve(path_t& nodes, string algo) {
+	if (algo == "christo") {
+		tsp_christofides(nodes);
+	}
+	else if (algo == "nn") {
+		tsp_nearest_neighbor(nodes);
+	}
+	else if (algo == "total") {
+		tsp_total_search(nodes);
+	}
+	else { throw "Invalid TSP algorithm"; }
+}
+
+void tsp_christofides(path_t& nodes) {
 	reverse(nodes.begin(), nodes.end());
 }
 
@@ -63,6 +77,22 @@ void tsp_nearest_neighbor(path_t& nodes) {
 			}
 		}
 	}
+}
+
+void tsp_total_search(path_t& nodes) {
+	path_t shortestPath = nodes;
+	coord_t shortestPathDist = calculate_path_distance(shortestPath);
+	for {
+		if 
+	}
+}
+
+int calculate_path_distance(path_t& nodes) {
+	totalDist = 0;
+	for (int i = 1; i < nodes.size(); i++) {
+		totalDist += bg::distance(nodes[i].pos, nodes[i-1].pos)
+	}
+	return totalDist;
 }
 
 string msg_from_json(string json) 
