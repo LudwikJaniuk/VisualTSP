@@ -89,16 +89,16 @@ void update_shortestPath(path_t& nodes, Path& shortestPath) {
 	}
 }
 
-void permutate(path_t& nodes, int pointer, Path& shortestPath) {
-    if (pointer == nodes.size()) {
+void permutate(path_t& nodes, int offset, Path& shortestPath) {
+    if (offset == nodes.size()) {
         return;
     }
-    for (int i = pointer; i < nodes.size(); i++) {
+    for (int i = offset; i < nodes.size(); i++) {
         path_t permutation = nodes;
-        permutation[pointer] = nodes[i];
-        permutation[i] = nodes[pointer];
+        permutation[offset] = nodes[i];
+        permutation[i] = nodes[offset];
 		checkShorter(permutation, shortestPath);
-        permutate(permutation, pointer + 1, shortestPath);
+        permutate(permutation, offset + 1, shortestPath);
     }
 }
 
