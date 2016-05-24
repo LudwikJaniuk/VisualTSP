@@ -23,7 +23,11 @@ protected:
     void resizeGL(int w, int h);
     void paintGL();
 
+    // Copies the positions from path to vertices in a format acceptable for opengl.
+    void updateVertices();
+
     path_t path;
+    vector<float> vertices;
 };
 
 #endif // OGLWIDGET_H

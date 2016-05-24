@@ -4,11 +4,28 @@
 #include <QOpenGLContext>
 #include <QOpenGLFunctions>
 
-OGLWidget::OGLWidget(QWidget *parent): QOpenGLWidget(parent)
-{}
+OGLWidget::OGLWidget(QWidget *parent)
+    : QOpenGLWidget(parent),
+      path{Node{point_t{0, 0, 0}, 0},
+           Node{point_t{0, 0.5, 0}, 1},
+           Node{point_t{0.5, 0, 0}, 2}}
+{
+    updateVertices();
+}
 
 OGLWidget::~OGLWidget()
 {}
+
+void OGLWidget::updateVertices()
+{
+    vertices.clear();
+    vertices.reserve(path.size()*3);
+    for (auto& n : path) {
+        vertices.push_back(n.pos.get<0>());
+        vertices.push_back(n.pos.get<1>());
+        vertices.push_back(n.pos.get<2>());
+    }
+}
 
 void OGLWidget::initializeGL()
 {
@@ -20,6 +37,8 @@ void OGLWidget::initializeGL()
     // Set global information
     // Setting clear color to red so that we know this actually did stuff.
     glClearColor(1.0f, 0.0f, 0.0f, 1.0f);
+    glEnable( GL_POINT_SMOOTH );
+    glPointSize(5.0f);
 }
 
 void OGLWidget::resizeGL(int width, int height)
@@ -50,10 +69,10 @@ void OGLWidget::paintGL()
     glLoadIdentity();
     glBlendColor(1, 1, 1, 1);
     glTranslatef(0, 0, -2); // Shift the world so origin is at (0,0,0) instead of (0,0,2).  
-    GLfloat vVertices[] = {0.0f, 0.5f, 0.0f,
-                          -0.5f, -0.5f, 0.0f,
-                           0.5f, -0.5f, 0.0f};
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, vVertices);
+    //GLfloat vVertices[] = {0.0f, 0.5f, 0.0f,
+    //                      -0.5f, -0.5f, 0.0f,
+    //                       0.5f, -0.5f, 0.0f};
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, vertices.data());
     glEnableVertexAttribArray(0);
-    glDrawArrays(GL_TRIANGLES, 0, 3);
+    glDrawArrays(GL_POINTS, 0, vertices.size()/3);
 }
