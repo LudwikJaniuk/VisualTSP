@@ -68,11 +68,9 @@ void OGLWidget::paintGL()
 
     glLoadIdentity();
     glBlendColor(1, 1, 1, 1);
-    glTranslatef(0, 0, -2); // Shift the world so origin is at (0,0,0) instead of (0,0,2).  
-    //GLfloat vVertices[] = {0.0f, 0.5f, 0.0f,
-    //                      -0.5f, -0.5f, 0.0f,
-    //                       0.5f, -0.5f, 0.0f};
+    glTranslatef(0, 0, -2); // Shift the world so origin is at (0,0,0) instead of (0,0,2).
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, vertices.data());
     glEnableVertexAttribArray(0);
     glDrawArrays(GL_POINTS, 0, vertices.size()/3);
+    glDrawArrays(GL_LINE_LOOP, 0, vertices.size()/3);
 }
