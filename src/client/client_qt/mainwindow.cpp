@@ -11,6 +11,8 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     ui->setupUi(this);
 
+    // Connect signals & slots so that when a certain signal fires, the specified slot receives it.
+    // This is a QT-specific feature.
     connect(&conThread, SIGNAL(solution(QString)), this, SLOT(displaySolution(QString)));
     connect(&conThread, SIGNAL(sendingJson(QString)), this, SLOT(displaySending(QString)));
     connect(&conThread, SIGNAL(error(QString)), this, SLOT(displayError(QString)));
