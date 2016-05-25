@@ -30,8 +30,13 @@ void MainWindow::displaySending(QString json) {
 void MainWindow::displaySolution(QString json) {
     ui->ResponseLabel->setText(json);
     string s = json.toStdString();
-    path_t p = json_to_path(s);
-    ui->openGLWidget->setData(p);
+    try {
+        path_t p = json_to_path(s);
+        ui->openGLWidget->setData(p);
+    } catch (exception& e) {
+        cout << "Error parsing json: " << e.what() << endl;
+        throw e;
+    }
 }
 
 void MainWindow::displayError(QString err) {
@@ -43,7 +48,8 @@ void MainWindow::on_SendButton_clicked()
     ui->SendingLabel->setText("Starting send thread");
     string host = ui->HostLine->text().toStdString();
     string port = ui->PortLine->text().toStdString();
-    conThread.sendProblem(host, port);
+    int size = ui->ProblemSizeBox->value();
+    conThread.sendProblem(host, port, size);
 }
 
 void MainWindow::on_xSlider_valueChanged(int value)
