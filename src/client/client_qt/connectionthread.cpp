@@ -1,5 +1,6 @@
 #include <string>
 #include <iostream>
+#include <random>
 
 #include <boost/array.hpp>
 #include <boost/asio.hpp>
@@ -25,6 +26,7 @@ void ConnectionThread::sendProblem(string host, string port)
 }
 
 string make_json();
+coord_t rand_coord_t(minstd_rand&);
 
 // Handles the whole sending-receiving job.
 void ConnectionThread::run()
@@ -87,12 +89,21 @@ void ConnectionThread::run()
 // TODO: Maybe add parameters, eg. problem size?
 string make_json()
 {
+    minstd_rand rand_eng;
     path_t nodes;
-    for (int i = 0; i < 10; i++) {
-        Node node{point_t(i, 2, 3), i};
+    for (int i = 0; i < 7; i++) {
+        point_t pos(rand_coord_t(rand_eng)*2 - 1,
+                    rand_coord_t(rand_eng)*2 - 1,
+                    rand_coord_t(rand_eng)*2 - 1);
+        Node node{pos, i};
         nodes.push_back(node);
     }
 	random_shuffle(nodes.begin(), nodes.end());
     return path_to_json(nodes);
+}
+
+coord_t rand_coord_t(minstd_rand& eng)
+{
+    return eng()/(coord_t)eng.max();
 }
 
