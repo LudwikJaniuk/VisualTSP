@@ -12,6 +12,10 @@ typedef bg::model::point<coord_t, 3, bg::cs::cartesian> point_t;
 struct Node {
 	point_t pos;
 	int id;
+	
+	inline bool operator<(const Node& n) {
+        return id < n.id;
+    }
 };
 typedef vector<Node> path_t;
 
