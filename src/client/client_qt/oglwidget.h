@@ -22,6 +22,7 @@ public slots:
     void setXRotation(int angle);
     void setYRotation(int angle);
     void setZRotation(int angle);
+    void setScale(float scale);
     void setData(path_t path);
 
 protected:
@@ -40,6 +41,7 @@ protected:
     QPoint lastPos;
     // Radius of a sphere that shall be visible inside the view.
     coord_t fitRadius = 1;
+    float scale = 0;
 };
 
 #endif // OGLWIDGET_H

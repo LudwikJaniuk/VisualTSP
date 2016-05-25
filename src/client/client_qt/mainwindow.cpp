@@ -66,3 +66,8 @@ void MainWindow::on_zSlider_valueChanged(int value)
 {
     ui->openGLWidget->setZRotation(value);
 }
+
+void MainWindow::on_ScaleSlider_valueChanged(int value)
+{
+    ui->openGLWidget->setScale(value/100.0f);
+}

@@ -49,7 +49,7 @@ void ConnectionThread::run()
         boost::array<char, 128> buf;
         boost::system::error_code err;
 
-        string msg = make_json(size);
+        string msg = make_json(size) + "#";
         cout << "Client Sending: " << msg << endl;
         emit sendingJson(QString::fromStdString(msg));
         socket.write_some(boost::asio::buffer(msg, msg.length()), err);
@@ -57,6 +57,7 @@ void ConnectionThread::run()
         if (err) {
             cout << "Error sending data: " <<  err << endl;
         }
+
         cout << "Received: ";
 
 	// We'll keep writing to this buffer as long as we're getting new data.

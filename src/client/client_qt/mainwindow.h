@@ -33,6 +33,8 @@ private slots:
     void on_ySlider_valueChanged(int value);
     void on_zSlider_valueChanged(int value);
 
+    void on_ScaleSlider_valueChanged(int value);
+
 private:
     Ui::MainWindow *ui;
     // We'll use this to send the problem and wait for an answer without blocking the GUI.
