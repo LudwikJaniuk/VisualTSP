@@ -85,7 +85,7 @@ void OGLWidget::paintGL()
     glRotatef(rot.x() * 3.6f, 0.0, 1.0, 0.0);
     glRotatef(rot.y() * 3.6f, 1.0, 0.0, 0.0);
     glRotatef(rot.z() * 3.6f, 0.0, 0.0, 1.0);
-    float scale = 1/fitRadius;
+    float scale = (1+this->scale)/fitRadius;
     glScalef(scale, scale, scale);
     cout << "REdrew" << endl;
 
@@ -100,6 +100,7 @@ void OGLWidget::setData(path_t path)
 {
     this->path = path;
     updateVertices();
+    update();
 }
 
 void OGLWidget::setXRotation(int angle)
@@ -127,4 +128,10 @@ void OGLWidget::setZRotation(int angle)
         update();
     }
     cout << "Angle changes to " << angle << endl;
+}
+
+void OGLWidget::setScale(float scale)
+{
+    this->scale = scale;
+    update();
 }

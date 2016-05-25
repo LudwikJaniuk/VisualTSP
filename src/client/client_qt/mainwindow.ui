@@ -20,47 +20,27 @@
    <layout class="QVBoxLayout" name="verticalLayout">
     <item>
      <layout class="QGridLayout" name="gridLayout">
-      <item row="4" column="0" colspan="2">
+      <item row="2" column="1">
+       <widget class="QSlider" name="xSlider">
+        <property name="orientation">
+         <enum>Qt::Vertical</enum>
+        </property>
+       </widget>
+      </item>
+      <item row="6" column="0" colspan="2">
        <widget class="QLabel" name="ResponseLabel">
         <property name="text">
-         <string>TextLabel</string>
+         <string>Here we'll write what we received.</string>
         </property>
         <property name="wordWrap">
          <bool>true</bool>
         </property>
        </widget>
       </item>
-      <item row="3" column="0" colspan="2">
+      <item row="4" column="0">
        <widget class="QLabel" name="SendingLabel">
         <property name="text">
-         <string>TextLabel</string>
-        </property>
-        <property name="wordWrap">
-         <bool>true</bool>
-        </property>
-       </widget>
-      </item>
-      <item row="1" column="0" colspan="2">
-       <widget class="QPushButton" name="SendButton">
-        <property name="text">
-         <string>Send Problem</string>
-        </property>
-       </widget>
-      </item>
-      <item row="2" column="0">
-       <widget class="OGLWidget" name="openGLWidget">
-        <property name="minimumSize">
-         <size>
-          <width>100</width>
-          <height>400</height>
-         </size>
-        </property>
-       </widget>
-      </item>
-      <item row="5" column="0" colspan="2">
-       <widget class="QLabel" name="ErrorLabel">
-        <property name="text">
-         <string>TextLabel</string>
+         <string>Here we'll write sending info.</string>
         </property>
         <property name="wordWrap">
          <bool>true</bool>
@@ -117,7 +97,7 @@
            <string/>
           </property>
           <property name="maximum">
-           <number>9999</number>
+           <number>999999</number>
           </property>
           <property name="value">
            <number>15</number>
@@ -126,15 +106,42 @@
         </item>
        </layout>
       </item>
-      <item row="2" column="1">
-       <widget class="QSlider" name="xSlider">
+      <item row="2" column="3">
+       <widget class="QSlider" name="zSlider">
         <property name="orientation">
          <enum>Qt::Vertical</enum>
         </property>
        </widget>
       </item>
-      <item row="2" column="3">
-       <widget class="QSlider" name="zSlider">
+      <item row="7" column="0" colspan="2">
+       <widget class="QLabel" name="ErrorLabel">
+        <property name="text">
+         <string>Here we'll write errors.</string>
+        </property>
+        <property name="wordWrap">
+         <bool>true</bool>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="0">
+       <widget class="OGLWidget" name="openGLWidget">
+        <property name="minimumSize">
+         <size>
+          <width>100</width>
+          <height>400</height>
+         </size>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="0" colspan="2">
+       <widget class="QPushButton" name="SendButton">
+        <property name="text">
+         <string>Send Problem</string>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="4">
+       <widget class="QSlider" name="ScaleSlider">
         <property name="orientation">
          <enum>Qt::Vertical</enum>
         </property>
