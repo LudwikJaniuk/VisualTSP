@@ -40,8 +40,10 @@ void MainWindow::displayError(QString err) {
 
 void MainWindow::on_SendButton_clicked()
 {
-    ui->SendingLabel->setText("SLAMANADER");
-    conThread.sendProblem("127.0.0.1", "3000");
+    ui->SendingLabel->setText("Starting send thread");
+    string host = ui->HostLine->text().toStdString();
+    string port = ui->PortLine->text().toStdString();
+    conThread.sendProblem(host, port);
 }
 
 void MainWindow::on_xSlider_valueChanged(int value)
