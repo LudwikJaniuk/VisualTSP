@@ -5,10 +5,12 @@
 #include <algorithm>
 #include <boost/asio.hpp>
 #include <boost/geometry.hpp>
+#include <boost/property_tree/json_parser.hpp>
 #include "common.h"
 
 using namespace std;
 using boost::asio::ip::tcp;
+using boost::property_tree::json_parser::json_parser_error;
 namespace bg = boost::geometry;
 
 struct Path
@@ -34,18 +36,46 @@ int main()
 		{
 			tcp::socket socket(io_service);
 			acceptor.accept(socket);
-			cout << "Got a connection" << endl;
+			cout << "Got a connection." << endl;
 
-			int bytesRead = 0;
-			const int inputSize = 1024;
-			char readBuf[inputSize] = {0};
-			bytesRead = socket.read_some(boost::asio::buffer(readBuf, inputSize));
-			string msg(readBuf, bytesRead);
-			cout << "Server received json:\n===========\n" << msg << "\n==========" << endl;
+			boost::array<char, 512> buf;
+			boost::system::error_code err;
+			ostringstream buf_stream;
+			
+			
+			while (true) {
+				size_t len = socket.read_some(boost::asio::buffer(buf), err);
+				
+				bool quit = false;
+				for (int i = 0; i < buf.size(); i++) {
+					if (buf[i] == '#') {
+						buf_stream.write(buf.data(), len);
+						quit = true;
+					}
+				}
+				
+				if (quit) {
+					break;
+				}
+				if (err)
+				{
+					throw boost::system::system_error(err);
+				}
+				buf_stream.write(buf.data(), len);
+				cout << "Reading input data." << endl;
+			}
+			string msg = buf_stream.str();
+			msg.erase(msg.length()-1, 1);
+			cout << "Server received json data." << endl;
 
-			msg = msg_from_json(msg);
+			try {
+				msg = msg_from_json(msg);
+			}
+			catch (json_parser_error& e) {
+				continue;
+			}
 
-			cout << "Server sending: " << msg << endl;
+			cout << "Server sending solution data." << endl;
 
 			boost::system::error_code ignored_err;
 			boost::asio::write(socket, boost::asio::buffer(msg), ignored_err);
@@ -77,6 +107,9 @@ void tsp_nearest_neighbor(path_t& nodes) {
 				swap(nodes[i+1], nodes[j]);
 			}
 		}
+		if ((i + 1) % 5 == 0) {
+			cout << "NN: Ready up to node " << i+1 << "." << endl;
+		}
 	}
 }
 
@@ -91,10 +124,13 @@ void tsp_total_search(path_t& nodes) {
 	sort(begin(nodes), end(nodes));
 	Path shortestPath = {nodes, calculate_path_distance(nodes)};
 	
+	int it = 1;
 	while (next_permutation(nodes.begin(), nodes.end())) {
 		update_shortestPath(nodes, shortestPath);
+		if (it % 50 == 0) {
+			cout << "TS: On permutation " << it << "." << endl;
+		}
 	}
-	
 	nodes = shortestPath.path;
 }
 
