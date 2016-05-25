@@ -20,41 +20,52 @@
    <layout class="QVBoxLayout" name="verticalLayout">
     <item>
      <layout class="QGridLayout" name="gridLayout">
-      <item row="2" column="1">
-       <widget class="QSlider" name="xSlider">
-        <property name="orientation">
-         <enum>Qt::Vertical</enum>
-        </property>
-       </widget>
-      </item>
-      <item row="6" column="0" colspan="2">
-       <widget class="QLabel" name="ResponseLabel">
-        <property name="text">
-         <string>Here we'll write what we received.</string>
-        </property>
-        <property name="wordWrap">
-         <bool>true</bool>
-        </property>
-       </widget>
-      </item>
       <item row="4" column="0">
        <widget class="QLabel" name="SendingLabel">
+        <property name="enabled">
+         <bool>true</bool>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>16777215</width>
+          <height>30</height>
+         </size>
+        </property>
+        <property name="mouseTracking">
+         <bool>false</bool>
+        </property>
         <property name="text">
          <string>Here we'll write sending info.</string>
         </property>
+        <property name="textFormat">
+         <enum>Qt::PlainText</enum>
+        </property>
+        <property name="scaledContents">
+         <bool>false</bool>
+        </property>
         <property name="wordWrap">
          <bool>true</bool>
         </property>
        </widget>
       </item>
-      <item row="2" column="2">
-       <widget class="QSlider" name="ySlider">
-        <property name="orientation">
-         <enum>Qt::Vertical</enum>
+      <item row="2" column="0">
+       <widget class="OGLWidget" name="openGLWidget">
+        <property name="minimumSize">
+         <size>
+          <width>100</width>
+          <height>400</height>
+         </size>
         </property>
        </widget>
       </item>
-      <item row="0" column="0" colspan="2">
+      <item row="1" column="0">
+       <widget class="QPushButton" name="SendButton">
+        <property name="text">
+         <string>Send Problem</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="0">
        <layout class="QHBoxLayout" name="horizontalLayout_3">
         <item>
          <widget class="QLabel" name="label">
@@ -106,15 +117,17 @@
         </item>
        </layout>
       </item>
-      <item row="2" column="3">
-       <widget class="QSlider" name="zSlider">
-        <property name="orientation">
-         <enum>Qt::Vertical</enum>
-        </property>
-       </widget>
-      </item>
-      <item row="7" column="0" colspan="2">
+      <item row="7" column="0">
        <widget class="QLabel" name="ErrorLabel">
+        <property name="enabled">
+         <bool>true</bool>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>16777215</width>
+          <height>100</height>
+         </size>
+        </property>
         <property name="text">
          <string>Here we'll write errors.</string>
         </property>
@@ -123,25 +136,48 @@
         </property>
        </widget>
       </item>
-      <item row="2" column="0">
-       <widget class="OGLWidget" name="openGLWidget">
-        <property name="minimumSize">
+      <item row="6" column="0">
+       <widget class="QLabel" name="ResponseLabel">
+        <property name="enabled">
+         <bool>true</bool>
+        </property>
+        <property name="maximumSize">
          <size>
-          <width>100</width>
-          <height>400</height>
+          <width>16777215</width>
+          <height>30</height>
          </size>
         </property>
-       </widget>
-      </item>
-      <item row="1" column="0" colspan="2">
-       <widget class="QPushButton" name="SendButton">
         <property name="text">
-         <string>Send Problem</string>
+         <string>Here we'll write what we received.</string>
+        </property>
+        <property name="wordWrap">
+         <bool>true</bool>
         </property>
        </widget>
       </item>
-      <item row="2" column="4">
+      <item row="0" column="1" rowspan="8">
+       <widget class="QSlider" name="xSlider">
+        <property name="orientation">
+         <enum>Qt::Vertical</enum>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="3" rowspan="8">
+       <widget class="QSlider" name="zSlider">
+        <property name="orientation">
+         <enum>Qt::Vertical</enum>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="4" rowspan="8">
        <widget class="QSlider" name="ScaleSlider">
+        <property name="orientation">
+         <enum>Qt::Vertical</enum>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="2" rowspan="8">
+       <widget class="QSlider" name="ySlider">
         <property name="orientation">
          <enum>Qt::Vertical</enum>
         </property>
