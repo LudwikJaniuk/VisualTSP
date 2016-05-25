@@ -29,6 +29,14 @@ void MainWindow::displaySending(QString json) {
 
 void MainWindow::displaySolution(QString json) {
     ui->ResponseLabel->setText(json);
+    string s = json.toStdString();
+    try {
+        path_t p = json_to_path(s);
+        ui->openGLWidget->setData(p);
+    } catch (exception& e) {
+        cout << "Error parsing json: " << e.what() << endl;
+        throw e;
+    }
 }
 
 void MainWindow::displayError(QString err) {
@@ -37,6 +45,24 @@ void MainWindow::displayError(QString err) {
 
 void MainWindow::on_SendButton_clicked()
 {
-    ui->SendingLabel->setText("SLAMANADER");
-    conThread.sendProblem("127.0.0.1", "3000");
+    ui->SendingLabel->setText("Starting send thread");
+    string host = ui->HostLine->text().toStdString();
+    string port = ui->PortLine->text().toStdString();
+    int size = ui->ProblemSizeBox->value();
+    conThread.sendProblem(host, port, size);
+}
+
+void MainWindow::on_xSlider_valueChanged(int value)
+{
+    ui->openGLWidget->setXRotation(value);
+}
+
+void MainWindow::on_ySlider_valueChanged(int value)
+{
+    ui->openGLWidget->setYRotation(value);
+}
+
+void MainWindow::on_zSlider_valueChanged(int value)
+{
+    ui->openGLWidget->setZRotation(value);
 }

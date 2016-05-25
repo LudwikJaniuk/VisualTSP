@@ -17,7 +17,7 @@ public:
     ~ConnectionThread() = default;
 
     // Use to submit a new problem.
-    void sendProblem(string host_name, string port);
+    void sendProblem(string host_name, string port, int size);
     void run() Q_DECL_OVERRIDE;
 
     // Listen to these for results.
@@ -29,6 +29,7 @@ signals:
 private:
     string host;
     string port;
+    int size;
 };
 
 #endif // CONNECTIONTHREAD_H

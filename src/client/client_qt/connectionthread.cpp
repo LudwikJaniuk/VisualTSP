@@ -1,5 +1,6 @@
 #include <string>
 #include <iostream>
+#include <random>
 
 #include <boost/array.hpp>
 #include <boost/asio.hpp>
@@ -13,18 +14,20 @@ using boost::asio::ip::tcp;
 ConnectionThread::ConnectionThread(QObject* parent)
 {}
 
-void ConnectionThread::sendProblem(string host, string port)
+void ConnectionThread::sendProblem(string host, string port, int size)
 {
     cout << "Sendproblem slot with host " << host << endl;
     this->host = host;
     this->port = port;
+    this->size = size;
     // TONEVERDO: This should actually check if the thread is already running etc,
     // but we dont have time for that.
     // This starts the thread, make run() run in the separate thread;
     start();
 }
 
-string make_json();
+string make_json(int);
+coord_t rand_coord_t(minstd_rand&);
 
 // Handles the whole sending-receiving job.
 void ConnectionThread::run()
@@ -46,7 +49,7 @@ void ConnectionThread::run()
         boost::array<char, 128> buf;
         boost::system::error_code err;
 
-        string msg = make_json();
+        string msg = make_json(size);
         cout << "Client Sending: " << msg << endl;
         emit sendingJson(QString::fromStdString(msg));
         socket.write_some(boost::asio::buffer(msg, msg.length()), err);
@@ -73,6 +76,7 @@ void ConnectionThread::run()
             buf_stream.write(buf.data(), len);
         }
         string solution_json = buf_stream.str();
+        cout << solution_json << endl;
         emit solution(QString::fromStdString(solution_json));
     }
     catch (std::exception& e)
@@ -85,14 +89,23 @@ void ConnectionThread::run()
 
 // Generated random json problem.
 // TODO: Maybe add parameters, eg. problem size?
-string make_json()
+string make_json(int size)
 {
+    minstd_rand rand_eng;
     path_t nodes;
-    for (int i = 0; i < 10; i++) {
-        Node node{point_t(i, 2, 3), i};
+    for (int i = 0; i < size; i++) {
+        point_t pos(rand_coord_t(rand_eng)*2 - 1,
+                    rand_coord_t(rand_eng)*2 - 1,
+                    rand_coord_t(rand_eng)*2 - 1);
+        Node node{pos, i};
         nodes.push_back(node);
     }
 	random_shuffle(nodes.begin(), nodes.end());
     return path_to_json(nodes);
+}
+
+coord_t rand_coord_t(minstd_rand& eng)
+{
+    return eng()/(coord_t)eng.max();
 }
 
